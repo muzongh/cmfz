@@ -1,5 +1,3 @@
-<html>
-<body>
-<h2>Hello World!</h2>
-</body>
-</html>
+<%
+    request.getRequestDispatcher("/manager/getCookie.do").forward(request,response);
+%>
