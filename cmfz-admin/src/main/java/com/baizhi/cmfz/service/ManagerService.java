@@ -17,4 +17,13 @@ public interface ManagerService {
     * @Exception
     */
     public Manager login(String name,String password);
+
+    /**
+    * @Description 修改Manager信息的Service的Service接口
+    * @Author       Muzonghao
+    * @Time         2018/7/5 13:56
+    * @Param        * @param manager:管理员信息
+    * @Exception    
+    */
+    public int modifyById(Manager manager);
 }

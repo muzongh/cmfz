@@ -17,4 +17,13 @@ public interface ManagerDao {
     * @Exception    null
     */
     public Manager selectByName(@Param("name")String name);
+
+    /**
+    * @Description 修改管理员信息DAO层接口
+    * @Author       Muzonghao
+    * @Time         2018/7/5 13:39
+    * @Param        * @param Manager:需要修改的管理员的新信息
+    * @Exception    
+    */
+    public int updateById(Manager manager);
 }

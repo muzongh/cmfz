@@ -12,5 +12,11 @@
     <select id="selectByName" resultMap="ManagerMap">
         select * from t_manager where name=#{name}
     </select>
+    
+    <update id="updateById">
+        update t_manager
+        set name=#{managerName},password=#{managerPassword}
+        where id=#{managerId}
+    </update>
 
 </mapper>

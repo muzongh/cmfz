@@ -118,7 +118,7 @@
 				</tbody></table>
 				<div class="powered">COPYRIGHT © 2008-2018.</div>
 				<div class="link">
-					<a href="http://www.chimingfowang.com/">持明佛网首页</a> |
+					<a href="http://www.chimingfowang.com/">持名佛网首页</a> |
 					<a href="http://www.chimingbbs.com/">交流论坛</a> |
 					<a href="">关于我们</a> |
 					<a href="">联系我们</a> |

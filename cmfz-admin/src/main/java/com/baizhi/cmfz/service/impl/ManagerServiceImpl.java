@@ -40,4 +40,15 @@ public class ManagerServiceImpl implements ManagerService {
         }
         return null;
     }
+
+    /**
+    * @Description Manager修改信息的Service实现方法
+    * @Author       Muzonghao
+    * @Time         2018/7/5 14:00
+    * @Param        * @param manager:管理员对象信息
+    * @Exception    
+    */
+    public int modifyById(Manager manager) {
+        return md.updateById(manager);
+    }
 }

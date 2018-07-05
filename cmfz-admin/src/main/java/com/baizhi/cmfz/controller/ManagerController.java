@@ -6,9 +6,13 @@ package com.baizhi.cmfz.controller;
 */
 
 import com.baizhi.cmfz.entity.Manager;
+import com.baizhi.cmfz.entity.Menu;
 import com.baizhi.cmfz.service.ManagerService;
+import com.baizhi.cmfz.service.MenuService;
 import com.baizhi.cmfz.utils.ImageCodeUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.List;
 
 @Controller
 @RequestMapping("/manager")
@@ -90,7 +95,7 @@ public class ManagerController {
     private ManagerService ms;
     
     /**
-    * @Description 管理员点击登陆之后，跳转的Controller方法，若成功则跳转到index页面，否则跳回原界面
+    * @Description 管理员点击登陆之后，跳转的Controller方法，若成功则跳转到main方法，否则跳回原界面
     * @Author       Muzonghao
     * @Time         2018/7/5 9:14
     * @Param        * @param name:管理员输入的管理员姓名
@@ -110,9 +115,58 @@ public class ManagerController {
                 response.addCookie(c1);
             }
             session.setAttribute("man",man);
-            return "redirect:/main.jsp";
+            return "main";
         }
         return "login";
     }
+
+    /**
+     * @Description 管理员登陆成功之后，先执行次方法，查询出来所有的一级二级目录，再由此方法跳到main页面
+     * @Author       Muzonghao
+     * @Time         2018/7/5 14:02
+     * @Param        * @param null
+     * @Exception
+     */
+    @Autowired
+    private MenuService menus;
+    @RequestMapping("/main")
+    @ResponseBody
+    public List<Menu> ma(HttpSession session){
+        List<Menu> parents = menus.queryMenus();
+        //session.setAttribute("parents",parents);
+        return parents;
+    }
+
+
+    /**
+    * @Description 异步检测旧密码是否正确和新密码是否可用
+    * @Author       Muzonghao
+    * @Time         2018/7/5 16:30
+    * @Param        * @param null
+    * @Exception    
+    */
+    @RequestMapping("/findPwd")
+    @ResponseBody
+    public String find(String pwd,HttpSession session){
+        Manager man= (Manager) session.getAttribute("man");
+        if(man!=null && man.getManagerPassword().equals(pwd)){
+            return "OK";
+        }
+        return "";
+    }
+
+    @RequestMapping("/modify")
+    public String modify(String pwd,HttpSession session){
+        Manager manager= (Manager) session.getAttribute("man");
+        manager.setManagerPassword(pwd);
+        System.out.println(pwd);
+        int result=ms.modifyById(manager);
+        if(result>0){
+            session.invalidate();
+            return "redirect:/manager/getCookie.do";
+        }
+        return null;
+    }
+
 
 }
