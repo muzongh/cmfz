@@ -1,4 +1,9 @@
 package com.baizhi.cmfz.service.impl;
+/**
+* @Description TODO
+* @Author  Muzonghao
+* @Date   2018/7/5 9:04
+*/
 
 import com.baizhi.cmfz.dao.ManagerDao;
 import com.baizhi.cmfz.entity.Manager;
@@ -14,7 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private ManagerDao md;
-
+    
+    /**
+    * @Description Manager登陆的Service实现登陆功能的方法
+    * @Author       Muzonghao
+    * @Time         2018/7/5 9:14
+    * @Param         * @param name:客户端输入的管理员姓名
+     *               * @param password:客户端输入的管理员密码
+    * @Exception    
+    */
     @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public Manager login(String name, String password) {
         Manager man=md.selectByName(name);

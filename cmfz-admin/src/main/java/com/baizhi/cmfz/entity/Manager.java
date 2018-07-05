@@ -1,5 +1,11 @@
 package com.baizhi.cmfz.entity;
 
+/**
+* @Description Manager的实体类
+* @Author  Muzonghao
+* @Date   2018/7/5 9:04
+*/
+
 import java.io.Serializable;
 
 public class Manager implements Serializable {

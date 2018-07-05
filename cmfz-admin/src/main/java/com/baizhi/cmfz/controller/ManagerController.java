@@ -1,4 +1,9 @@
 package com.baizhi.cmfz.controller;
+/**
+* @Description TODO
+* @Author  Muzonghao
+* @Date   2018/7/5 9:05
+*/
 
 import com.baizhi.cmfz.entity.Manager;
 import com.baizhi.cmfz.service.ManagerService;
@@ -21,6 +26,13 @@ import java.net.URLEncoder;
 @RequestMapping("/manager")
 public class ManagerController {
 
+    /**
+    * @Description 勾选记住用户名，之后需要执行的操作，读取Cookie
+    * @Author       Muzonghao
+    * @Time         2018/7/5 9:13
+    * @Param        * @param null
+    * @Exception
+    */
     @RequestMapping("/getCookie")
     public String get(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -34,7 +46,14 @@ public class ManagerController {
         return "login";
     }
 
-
+    
+    /**
+    * @Description 获取验证码的方法
+    * @Author       Muzonghao
+    * @Time         2018/7/5 9:13
+    * @Param        * @param null
+    * @Exception    
+    */
     @RequestMapping("/image")
     public void image(HttpServletRequest request, HttpServletResponse response) throws Exception{
         HttpSession session=request.getSession();
@@ -47,7 +66,14 @@ public class ManagerController {
         ImageIO.write(image, "png", response.getOutputStream());
 
     }
-
+    
+    /**
+    * @Description 异步验证管理员输入的验证码是否正确
+    * @Author       Muzonghao
+    * @Time         2018/7/5 9:14
+    * @Param        * @param encode:管理员前端输入的验证码
+    * @Exception    
+    */
     @RequestMapping("/checkImage")
     @ResponseBody
     public String check(String encode,HttpServletRequest request){
@@ -62,18 +88,24 @@ public class ManagerController {
 
     @Autowired
     private ManagerService ms;
-
+    
+    /**
+    * @Description 管理员点击登陆之后，跳转的Controller方法，若成功则跳转到index页面，否则跳回原界面
+    * @Author       Muzonghao
+    * @Time         2018/7/5 9:14
+    * @Param        * @param name:管理员输入的管理员姓名
+     * @Param        * @param password:管理员输入的管理员密码
+     * @Param        * @param remember:管理员是否勾选了”记住用户名“这个选项
+    * @Exception    
+    */
     @RequestMapping("/login")
     public String login(String name,String password,boolean remember,HttpServletResponse response,HttpServletRequest request) throws Exception {
         HttpSession session=request.getSession();
         Manager man=ms.login(name,password);
-        System.out.println(remember);
-        System.out.println(name);
         if(man!=null){
             if(remember){
                 String nam=URLEncoder.encode(name,"utf-8");
                 Cookie c1 = new Cookie("name", nam);
-                System.out.println(nam);
                 c1.setPath("/cmfz-admin");
                 response.addCookie(c1);
             }
