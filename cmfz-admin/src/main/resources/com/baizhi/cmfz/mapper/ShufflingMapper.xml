@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.ShufflingDao">
+   <resultMap id="ShufflingMap" type="Shuffling">
+       <id property="shufflingId" column="id" />
+       <result column="path" property="shufflingPath" />
+       <result property="shufflingDate" column="date" />
+       <result column="description" property="shufflingDescription" />
+       <result property="shufflingStatus" column="status" />
+   </resultMap>
+    
+    <select id="selectByPage" resultMap="ShufflingMap">
+        select * from t_shuffling limit #{begin},#{end}
+    </select>
+
+    <select id="countAll" resultType="int">
+        select count(*)
+        from t_shuffling
+    </select>
+    
+    <insert id="insert">
+        insert into t_shuffling
+        values(#{shufflingId},#{shufflingPath},#{shufflingDate},#{shufflingDescription},#{shufflingStatus})
+    </insert>
+
+    <update id="update">
+        update t_shuffling
+        set path=#{shufflingPath},description=#{shufflingDescription},status=#{shufflingStatus},date=#{shufflingDate}
+        where id=#{shufflingId}
+    </update>
+
+
+</mapper>

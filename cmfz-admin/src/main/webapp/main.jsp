@@ -8,9 +8,11 @@
 <title>持名法州主页</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/IconExtension.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/icon.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
 <script type="text/javascript">
 	$(function () {
 
@@ -18,17 +20,16 @@
             url:"${pageContext.request.contextPath}/manager/main.do",
             dataType:"json",
             success : function(parents){
-				$.each(parents,function (index,obj) {
-				    var content="";
-				    $.each(obj.menus,function (index1,obj1) {
-						content+="<a class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'"+obj1.menuIcon+"'\" style=\"width: 100%\" onclick=\"addTab(this)\">"+obj1.menuName+"</a><br />";
+                $.each(parents,function (index,obj) {
+                    var content="";
+                    $.each(obj.menus,function (index1,obj1) {
+                        content+="<a class=\"easyui-linkbutton\" data-options=\"plain:true,iconCls:'"+obj1.menuIcon+"'\" style=\"width: 100%\" onclick=\"addTab(this,'"+obj1.menuUrl+"')\">"+obj1.menuName+"</a><br />";
                     });
-
-					$("#aa").accordion("add",{
-						title:obj.menuName,
-						icon:obj.menuIcon,
-						content:content,
-					});
+                    $("#aa").accordion("add",{
+                        title:obj.menuName,
+                        icon:obj.menuIcon,
+                        content:content,
+                    });
                 });
             }
         });
@@ -47,9 +48,11 @@
 		});
     });
 
+    function editShu(a){
+        alert(a);
+    };
 
-
-	function addTab(message) {
+	function addTab(message,path) {
 	    var b=$("#tt").tabs("exists",message.text);
 	    if(b){
 	        $("#tt").tabs("select",message.text);
@@ -57,8 +60,53 @@
             $("#tt").tabs("add",{
                 title:message.text,
                 closable:true,
+                fit:true,
+                href:"${pageContext.request.contextPath}/"+path,
+                onLoad:function () {
+                    $('#dg').datagrid({
+						fit:true,
+                        url:"${pageContext.request.contextPath}/shuffling/showAll.do",
+                        columns:[[
+                            {field:"shufflingId",title:"标识编号",width:90},
+                            {field:"shufflingPath",title:"文件名",width:90},
+                            {field:"shufflingDescription",title:"描述信息",width:90,},
+                            {field:"shufflingStatus",title:"轮播图状态",width:90,
+                                styler: function(value,row,index){
+                                    if (row.shufflingStatus=="展示中"){
+                                        return 'color:red;';
+                                    }
+                                },
+                            },
+                            {field:"shufflingDate",title:"轮播图创建时间",width:90,},
+							{field:"operation",title:"操作",width:90,
+                                formatter:function(value,row,index){
+                                    return "<a name='modify' id='"+row.shufflingId+"' onclick='editShu(this)'>修改</a>";
+                                },
+                            },
+
+                        ]],
+						onLoadSuccess:function(){
+                            $("a[name=modify]").linkbutton({
+                                iconCls:'icon-edit',
+                            })
+                        },
+                        pagination:true,
+                        pageList : [9,12,15],
+                        pageSize : 9,
+                        toolbar : "#tb",
+                        fitColumns: true,
+                        singleSelect:true,
+                        view: detailview,
+                        detailFormatter: function(rowIndex, rowData){
+                            return '<table><tr>' +
+                                '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/images/' + rowData.shufflingPath + '"></td>' +
+                                '</tr></table>';
+                        },
+                    })
+                }
+
             });
-		}
+		};
 
     }
 </script>
