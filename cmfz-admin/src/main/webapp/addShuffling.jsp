@@ -11,7 +11,7 @@
 		<tr>
 			<td>轮播图描述:</td>
 			<td>
-				<input id="des" name="description" class="easyui-textbox" data-options="width:251"/>
+				<input id="des" name="description" class="easyui-textbox" data-options="width:251,required:true"/>
 			</td>
 		</tr>
 		<tr>
@@ -26,7 +26,7 @@
 		<tr>
 			<td>请选择图片:</td>
 			<td>
-				<input name="file" id="files" class="easyui-filebox" data-options=" buttonText: '选择文件',buttonIcon:'icon-add',buttonAlign: 'right',accept:'.jpg',width:251">
+				<input name="file" id="files" class="easyui-filebox" data-options=" buttonText: '选择文件',buttonIcon:'icon-add',buttonAlign: 'right',accept:'.jpg',width:251,required:true">
 			</td>
 		</tr>
 	</table>

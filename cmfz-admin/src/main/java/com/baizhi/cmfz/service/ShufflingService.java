@@ -29,4 +29,13 @@ public interface ShufflingService {
     * @Exception    
     */
     public int add(Shuffling shu);
+    
+    /**
+    * @Description 修改轮播图片信息
+    * @Author       Muzonghao
+    * @Time         2018/7/6 17:26
+    * @Param        * @param null
+    * @Exception    
+    */
+    public int modify(Shuffling shu);
 }

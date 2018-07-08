@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.GuruDao">
+   <resultMap id="GuruMap" type="Guru">
+        <id column="id" property="guruId" />
+       <result property="guruName" column="name" />
+       <result column="photo" property="guruPhoto" />
+       <result property="guruSummary" column="summary" />
+   </resultMap>
+
+    <select id="selectById" resultMap="GuruMap">
+        select *
+        from t_guru
+        where id=#{id}
+    </select>
+
+    <select id="selectByPage" resultMap="GuruMap">
+        select *
+        from t_guru
+        limit #{begin},#{end}
+    </select>
+    <select id="countAll" resultType="int">
+        select count(*)
+        from t_guru
+    </select>
+
+    <select id="selectByContains" resultMap="GuruMap">
+        select *
+        from t_guru
+        where name like concat('%',#{name},'%')
+        limit #{begin},#{end}
+    </select>
+    <select id="countContains" resultType="int">
+        select count(*)
+        from t_guru
+        where name like concat('%',#{name},'%')
+    </select>
+
+    <select id="selectAll" resultMap="GuruMap">
+        select *
+        from t_guru
+    </select>
+    
+    <insert id="insert">
+        insert into t_guru
+        values(#{guruId},#{guruName},#{guruPhoto},#{guruSummary})
+    </insert>
+
+    <insert id="insertBatch">
+        insert into t_guru
+        values
+        <foreach collection="list" separator="," item="guru">
+            (#{guru.guruId},#{guru.guruName},#{guru.guruPhoto},#{guru.guruSummary})
+        </foreach>
+    </insert>
+    
+    <update id="update">
+        update t_guru
+        set name=#{guruName},photo=#{guruPhoto},summary=#{guruSummary}
+        where id=#{guruId}
+    </update>
+
+    <delete id="delete">
+        delete from t_guru where id=#{id}
+    </delete>
+
+</mapper>

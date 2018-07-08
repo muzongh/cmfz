@@ -54,12 +54,9 @@ public class ShufflingController {
                       @RequestParam("description") String description,
                       @RequestParam("file") MultipartFile file,
                       @RequestParam("status")String status) throws Exception{
-        System.out.println(description+file+status);
         if(!file.isEmpty()) {
             String filename = file.getOriginalFilename();
-            System.out.println(filename);
             String realPath = request.getSession().getServletContext().getRealPath("/images/").replace(request.getContextPath().replace("/","\\"),"");
-            System.out.println(realPath);
             FileUtils.copyInputStreamToFile(file.getInputStream(), new File(realPath,
                     file.getOriginalFilename()));
             Shuffling shu=new Shuffling();
@@ -68,7 +65,6 @@ public class ShufflingController {
             shu.setShufflingPath(filename);
             shu.setShufflingStatus(status);
             shu.setShufflingId(UUID.randomUUID().toString().replace("-",""));
-            System.out.println(shu);
             int result=ss.add(shu);
             if(result>0){
                 return "success";

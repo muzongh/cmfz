@@ -38,4 +38,9 @@ public class ShufflingServiceImpl implements ShufflingService {
         return sd.insert(shu);
     }
 
+
+    public int modify(Shuffling shu) {
+        return sd.update(shu);
+    }
+
 }
