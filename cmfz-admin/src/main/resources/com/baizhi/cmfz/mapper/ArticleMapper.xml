@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.ArticleDao">
+    <resultMap id="ArticleMap" type="Article">
+        <id column="id" property="articleId" />
+        <result property="articleName" column="name" />
+        <result column="introduction" property="articleIntroduction" />
+        <result property="articleDate" column="date" />
+        <result column="src" property="articleSrc" />
+        <result property="guruId" column="guru_id" />
+        <result column="status" property="articleStatus" />
+    </resultMap>
+    <select id="selectByPage" resultMap="ArticleMap">
+        select *
+        from t_article
+        limit #{begin},#{end}
+    </select>
+    <select id="count" resultType="int">
+        select count(*)
+        from t_article
+    </select>
+
+    <select id="selectById" resultMap="ArticleMap">
+        select *
+        from t_article
+        where id=#{id}
+    </select>
+
+    <insert id="insert">
+        insert into
+        t_article
+        values(#{articleId},#{articleName},#{articleIntroduction},#{articleDate},#{articleSrc},#{guruId},#{articleStatus})
+    </insert>
+    
+    <delete id="delete">
+        delete
+        from t_article
+        where id=#{id}
+    </delete>
+
+    <update id="update">
+        update
+        t_article
+        set
+        name=#{articleName},introduction=#{articleIntroduction},date=#{articleDate},src=#{articleSrc},guru_id=#{guruId},status=#{articleStatus}
+        where id=#{articleId}
+    </update>
+
+</mapper>
