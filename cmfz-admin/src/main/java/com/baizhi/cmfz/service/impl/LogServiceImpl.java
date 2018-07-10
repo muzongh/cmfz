@@ -32,7 +32,7 @@ public class LogServiceImpl implements LogService {
     }
 
 
-    public int add(Log log) {
+    public int insert(Log log) {
         log.setLogId(UUID.randomUUID().toString().replace("-",""));
         log.setLogTime(new Date());
         return ld.insert(log);

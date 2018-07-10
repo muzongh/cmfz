@@ -8,6 +8,7 @@
         <result column="action" property="logAction" />
         <result column="message" property="logMessage" />
         <result column="result" property="logResult" />
+        <result property="logResource" column="resource" />
     </resultMap>
     
     <select id="selectByPage" resultMap="LogMap">
@@ -23,6 +24,6 @@
     <insert id="insert">
         insert
         into t_log
-        values(#{logId},#{logUser},#{logTime},#{logAction},#{logMessage},#{logResult})
+        values(#{logId},#{logUser},#{logTime},#{logAction},#{logMessage},#{logResult},#{logResource})
     </insert>
 </mapper>

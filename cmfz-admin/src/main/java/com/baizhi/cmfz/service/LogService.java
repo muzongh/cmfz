@@ -12,5 +12,5 @@ import java.util.Map;
 public interface LogService {
     public Map<String,Object> queryByPage(Integer newPage,Integer pageSize);
 
-    public int add(Log log);
+    public int insert(Log log);
 }

@@ -3,7 +3,6 @@
 <script type="text/javascript">
 	$(function () {
         $('#dg').datagrid({
-            fit:true,
             url:"${pageContext.request.contextPath}/shuffling/showAll.do",
             columns:[[
                 {field:"shufflingId",title:"标识编号",width:90},
