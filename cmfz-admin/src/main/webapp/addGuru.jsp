@@ -6,7 +6,7 @@
     });
 </script>
 
-<form id="ud" method="post" enctype="multipart/form-data" style="margin: 15px">
+<form id="guru" method="post" enctype="multipart/form-data" style="margin: 15px">
 	<table>
 		<tr>
 			<td>上师法号:</td>

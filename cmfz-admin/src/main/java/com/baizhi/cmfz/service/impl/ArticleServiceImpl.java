@@ -1,6 +1,7 @@
 package com.baizhi.cmfz.service.impl;
 
 import com.baizhi.cmfz.dao.ArticleDao;
+import com.baizhi.cmfz.dao.GuruDao;
 import com.baizhi.cmfz.entity.Article;
 import com.baizhi.cmfz.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleDao ad;
 
+    @Autowired
+    private GuruDao gd;
+
     @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public Map<String, Object> queryByPage(Integer newPage, Integer pageSize) {
         Map<String, Object> map = new HashMap<>();
         List<Article> articles = ad.selectByPage((newPage - 1) * pageSize, newPage * pageSize);
+        for (Article article : articles) {
+            article.setGuruId(gd.selectById(article.getGuruId()).getGuruName());
+        }
         map.put("rows",articles);
         int count=ad.count();
         map.put("total",count);
@@ -54,6 +61,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int modify(Article article) {
+        article.setArticleDate(new Date());
         return ad.update(article);
     }
 }

@@ -25,7 +25,7 @@
             },
         });
 
-        $("#guruadd").linkbutton({
+        $("#guruadd").linkbutton( {
             iconCls:'icon-add',plain:true,text:'新增上师',
             onClick:function(){
                 $("#gurudd").dialog({

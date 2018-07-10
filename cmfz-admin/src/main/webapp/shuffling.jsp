@@ -2,7 +2,7 @@
 	pageEncoding="utf-8" isELIgnored="false" %>
 <script type="text/javascript">
 	$(function () {
-        $('#dg').datagrid({
+        $('#shufflingdg').datagrid({
             url:"${pageContext.request.contextPath}/shuffling/showAll.do",
             columns:[[
                 {field:"shufflingId",title:"标识编号",width:90},
@@ -31,7 +31,7 @@
             pagination:true,
             pageList : [9,12,15],
             pageSize : 9,
-            toolbar : "#tb",
+            toolbar : "#shufflingtb",
             fitColumns: true,
             singleSelect:true,
             view: detailview,
@@ -41,10 +41,10 @@
                     '</tr></table>';
             },
         })
-        $("#add").linkbutton({
+        $("#shufflingadd").linkbutton({
             iconCls:'icon-add',plain:true,text:'新增轮播图',
             onClick:function(){
-                $("#dd").dialog({
+                $("#shufflingdd").dialog({
 					title:"新增轮播图",
                     width:400,
                     height:251,
@@ -53,7 +53,7 @@
                         text:"保存",
                         iconCls:"icon-save",
                         handler:function(){
-                            $("#ud").form("submit",{
+                            $("#shufflingud").form("submit",{
                                 url:"${pageContext.request.contextPath}/shuffling/add.do",
                                 onSubmit:function(){
                                     return $(this).form("validate");
@@ -67,7 +67,7 @@
                                             timeout:3000,
                                             showType:'slide'
                                         });
-                                        $("#dd").dialog("close");
+                                        $("#shufflingdd").dialog("close");
                                     }else{
                                         $.messager.show({
                                             title:'添加轮播图成功提示',
@@ -76,7 +76,8 @@
                                             timeout:3000,
                                             showType:'slide'
                                         });
-                                        $("#dd").dialog("close");
+                                        $("#shufflingdd").dialog("close");
+                                        $("#shufflingdg").datagrid("reload");
                                     }
                                 }
                             });
@@ -92,7 +93,7 @@
                                 timeout:3000,
                                 showType:'slide'
                             });
-                            $("#dd").dialog("close");
+                            $("#shufflingdd").dialog("close");
                         },
                     }],
 
@@ -100,7 +101,7 @@
             },
         });
 
-        $("#help").linkbutton({
+        $("#shufflinghelp").linkbutton({
             iconCls:'icon-help',plain:true,text:'帮助',
             onClick:function(){
 
@@ -108,9 +109,9 @@
         });
     });
 </script>
-<table id="dg" ></table>
-<div id="tb" style="display: none">
-	<a id="add"></a>
-	<a id="help"></a>
+<table id="shufflingdg" ></table>
+<div id="shufflingtb" style="display: none">
+	<a id="shufflingadd"></a>
+	<a id="shufflinghelp"></a>
 </div>
-<div id="dd" style="width:400px;height:300px;"></div>
+<div id="shufflingdd" style="width:400px;height:300px;"></div>

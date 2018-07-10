@@ -17,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Description TODO
@@ -75,6 +72,13 @@ public class ArticleController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @RequestMapping("/showAllArticle")
+    @ResponseBody
+    public Map<String,Object> showArticle(@RequestParam("page")Integer page,@RequestParam("rows")Integer rows){
+
+        return as.queryByPage(page,rows);
     }
 
 }

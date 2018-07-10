@@ -6,7 +6,7 @@
     });
 </script>
 
-<form id="ud" method="post" enctype="multipart/form-data" style="margin: 15px">
+<form id="shufflingud" method="post" enctype="multipart/form-data" style="margin: 15px">
 	<table>
 		<tr>
 			<td>轮播图描述:</td>
