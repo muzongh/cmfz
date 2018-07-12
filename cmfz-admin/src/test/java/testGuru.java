@@ -1,7 +1,10 @@
 import com.baizhi.cmfz.dao.GuruDao;
+import com.baizhi.cmfz.dao.ManagerDao;
 import com.baizhi.cmfz.entity.Guru;
 import com.baizhi.cmfz.service.GuruService;
 import com.baizhi.cmfz.service.impl.GuruServiceImpl;
+import com.baizhi.cmfz.service.impl.ManagerServiceImpl;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,10 +19,9 @@ import java.util.UUID;
  */
 public class testGuru {
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-        GuruService gs= (GuruService) context.getBean("guruServiceImpl");
-        Guru guru =new Guru();
-        guru.setGuruId(UUID.randomUUID().toString().replace("-",""));
-        System.out.println(gs.add(guru));
+        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        ManagerDao managerServiceImpl = (ManagerDao) classPathXmlApplicationContext.getBean("managerDao");
+        System.out.println(managerServiceImpl.selectRolesByManName("zs"));
+        System.out.println(managerServiceImpl.selectPermissionsByName("zs"));
     }
 }

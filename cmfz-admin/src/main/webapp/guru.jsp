@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"
 	pageEncoding="utf-8" isELIgnored="false" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <script type="text/javascript">
 	$(function () {
         $('#gurudg').datagrid({
-            //fit:true,
             url:"${pageContext.request.contextPath}/guru/showAll.do",
             columns:[[
                 {field:"guruId",title:"上师标识",width:90},
@@ -328,16 +328,26 @@
 </script>
 <table id="gurudg" ></table>
 <div id="gurutb" style="display: none">
-	<a id="guruadd"></a>
-	<a id="guruedit"></a>
-	<a id="gurucancel"></a>
-    <a id="batch"></a>
-    <a id="export"></a>
-
-    <input id="contains" />
-    <div id="mm" style="width:120px">
-        <div data-options="name:'name',iconCls:'icon-ok'">法号</div>
-    </div>
-
+    <shiro:hasPermission name="guru:add">
+        <a id="guruadd"></a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="guru:update">
+        <a id="guruedit"></a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="guru:cancel">
+        <a id="gurucancel"></a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="guru:addBatch">
+        <a id="batch"></a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="guru:export">
+        <a id="export"></a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="guru:contains">
+        <input id="contains" />
+        <div id="mm" style="width:120px">
+            <div data-options="name:'name',iconCls:'icon-ok'">法号</div>
+        </div>
+    </shiro:hasPermission>
 </div>
 <div id="gurudd" style="width:400px;height:300px;"></div>

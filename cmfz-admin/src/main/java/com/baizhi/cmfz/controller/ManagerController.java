@@ -11,6 +11,10 @@ import com.baizhi.cmfz.service.ManagerService;
 import com.baizhi.cmfz.service.MenuService;
 import com.baizhi.cmfz.utils.ImageCodeUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -38,7 +42,7 @@ public class ManagerController {
     * @Param        * @param null
     * @Exception
     */
-    @RequestMapping("/getCookie")
+   /* @RequestMapping("/getCookie")
     public String get(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Cookie[] cookies = request.getCookies();
        for (Cookie cookie : cookies) {
@@ -49,7 +53,7 @@ public class ManagerController {
             }
         }
         return "login";
-    }
+    }*/
 
     
     /**
@@ -104,8 +108,24 @@ public class ManagerController {
     * @Exception    
     */
     @RequestMapping("/login")
-    public String login(String name,String password,boolean remember,HttpServletResponse response,HttpServletRequest request) throws Exception {
-        HttpSession session=request.getSession();
+    public String login(String name,String password,boolean rememberMe,HttpServletResponse response,HttpServletRequest request) throws Exception {
+        //在外部环境中安全管理器会自动进行初始化
+        Subject subject = SecurityUtils.getSubject();
+
+        try {
+            subject.login(new UsernamePasswordToken(name,password,rememberMe));
+            String nam=URLEncoder.encode(name,"utf-8");
+            Cookie c1 = new Cookie("name", nam);
+            c1.setPath("/cmfz-admin");
+            response.addCookie(c1);
+            request.getSession().setAttribute("man",ms.login(name));
+            return "redirect:/main.jsp";
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            return "redirect:/login.jsp";
+        }
+
+        /*HttpSession session=request.getSession();
         Manager man=ms.login(name,password);
         if(man!=null){
             if(remember){
@@ -117,7 +137,7 @@ public class ManagerController {
             session.setAttribute("man",man);
             return "main";
         }
-        return "login";
+        return "login";*/
     }
 
     /**

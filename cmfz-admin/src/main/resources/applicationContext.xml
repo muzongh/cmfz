@@ -9,10 +9,11 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
     </context:component-scan>
 
-    <bean class="com.baizhi.cmfz.controller.aspectjUtils"></bean>
+    <bean id="aspectjUtils2" class="com.baizhi.cmfz.controller.aspectjUtils"></bean>
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
     <context:property-placeholder location="classpath:jdbc.properties" />
+    <import resource="shiro.xml" />
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${driver}"></property>

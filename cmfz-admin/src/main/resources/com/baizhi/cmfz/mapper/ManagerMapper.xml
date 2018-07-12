@@ -13,6 +13,43 @@
         select * from t_manager where name=#{name}
     </select>
     
+    <select id="selectRolesByManName" resultType="Role">
+        select
+            id roleId,
+            role_name roleName,
+            role_tag roleTag
+        from t_role
+        where id in(
+            select role_id
+            from t_manager_role
+            where manager_id=(
+                select id
+                from t_manager
+                where name=#{name})
+        )
+    </select>
+
+    <select id="selectPermissionsByName" resultType="Permission">
+        select
+            id permissionId,
+            resource_name resourceName,
+            resource_tag resourceTag,
+            resource_url resourceUrl,
+            permission_tag permissionTag
+        from t_permission
+        where id in(
+            select permission_id from t_role_permission
+                where role_id in(
+                select role_id
+                from t_manager_role
+                where manager_id=(
+                    select id
+                    from t_manager
+                    where name=#{name})
+            )
+        )
+    </select>
+    
     <update id="updateById">
         update t_manager
         set name=#{managerName},password=#{managerPassword}

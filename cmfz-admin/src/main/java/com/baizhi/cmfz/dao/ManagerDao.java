@@ -6,7 +6,11 @@ package com.baizhi.cmfz.dao;
 */
 
 import com.baizhi.cmfz.entity.Manager;
+import com.baizhi.cmfz.entity.Permission;
+import com.baizhi.cmfz.entity.Role;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ManagerDao {
     /**
@@ -17,6 +21,24 @@ public interface ManagerDao {
     * @Exception    null
     */
     public Manager selectByName(@Param("name")String name);
+    
+    /**
+    * @Description 查找Manager的角色信息
+    * @Author       Muzonghao
+    * @Time         2018/7/12 17:27
+    * @Param        * @param null
+    * @Exception    
+    */
+    public List<Role> selectRolesByManName(@Param("name")String name);
+
+    /**
+    * @Description 查找Manager的权限信息
+    * @Author       Muzonghao
+    * @Time         2018/7/12 17:40
+    * @Param        * @param null
+    * @Exception    
+    */
+    public List<Permission> selectPermissionsByName(@Param("name")String name);
 
     /**
     * @Description 修改管理员信息DAO层接口

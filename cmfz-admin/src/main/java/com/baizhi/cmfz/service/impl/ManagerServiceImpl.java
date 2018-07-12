@@ -7,12 +7,16 @@ package com.baizhi.cmfz.service.impl;
 
 import com.baizhi.cmfz.dao.ManagerDao;
 import com.baizhi.cmfz.entity.Manager;
+import com.baizhi.cmfz.entity.Permission;
+import com.baizhi.cmfz.entity.Role;
 import com.baizhi.cmfz.service.ManagerService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -29,16 +33,19 @@ public class ManagerServiceImpl implements ManagerService {
     * @Exception    
     */
     @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
-    public Manager login(String name, String password) {
-        Manager man=md.selectByName(name);
-        if(man!=null){
-            String pwd= DigestUtils.md5Hex(password+man.getManagerSalt());
-            String pwd1=DigestUtils.md5Hex(man.getManagerPassword()+man.getManagerSalt());
-            if(pwd.equals(pwd1)){
-                return man;
-            }
-        }
-        return null;
+    public Manager login(String name) {
+        return md.selectByName(name);
+    }
+
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    public List<Role> queryRolesByName(String name) {
+        return md.selectRolesByManName(name);
+    }
+
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    public List<Permission> queryPermissionsByName(String name) {
+        System.out.println(md.selectPermissionsByName(name));
+        return md.selectPermissionsByName(name);
     }
 
     /**

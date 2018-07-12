@@ -51,7 +51,16 @@
 
 		});
 	</script>
-
+<%
+	String name = "";
+	javax.servlet.http.Cookie cs[] = request.getCookies();
+	for(javax.servlet.http.Cookie c:cs){
+		if(c.getName().equals("name")){
+			name = c.getValue();
+			name = java.net.URLDecoder.decode(name,"utf-8");
+		}
+	}
+%>
 
 </head>
 <body>
@@ -68,7 +77,7 @@
 								用户名:
 							</th>
 							<td>
-								<input type="text" id="name" name="name" class="text" maxlength="20" value="${requestScope.name}"/>
+								<input type="text" id="name" name="name" class="text" maxlength="20" value="<%=name %>"/>
 							</td>
 					  </tr>
 					  <tr>
@@ -104,7 +113,7 @@
 						</th>
 						<td>
 							<label>
-								<input type="checkbox" id="isRememberUsername" value="true" name="remember"/> 记住用户名
+								<input type="checkbox" id="isRememberUsername" value="true" name="rememberMe"/> 记住用户名
 							</label>
 						</td>
 					</tr>

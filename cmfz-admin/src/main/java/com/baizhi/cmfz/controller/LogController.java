@@ -22,7 +22,6 @@ public class LogController {
     @RequestMapping("/showAll")
     @ResponseBody
     public Map<String,Object> show(@RequestParam("page")Integer page,@RequestParam("rows")Integer rows){
-        System.out.println(ls.queryByPage(page,rows));
         return  ls.queryByPage(page,rows);
     }
 }

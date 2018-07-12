@@ -24,7 +24,7 @@ public class aspectjUtils {
     @Autowired
     private LogService ls;
     @Autowired
-    private HttpSession session;
+    private HttpSession httpSession;
     @Pointcut("execution(* com.baizhi.cmfz.service.impl.*.add*(..)) " +
             "|| execution(* com.baizhi.cmfz.service.impl.*.cancel*(..)) " +
             "|| execution(* com.baizhi.cmfz.service.impl.*.modify*(..))")
@@ -57,7 +57,7 @@ public class aspectjUtils {
         String resource=className.replace("Service","");
 
         String name="";
-        Manager manager =(Manager)session.getAttribute("man");
+        Manager manager =(Manager)httpSession.getAttribute("man");
         String userName=manager.getManagerName();
         if(methodName.startsWith("add")){
             name="新增";
