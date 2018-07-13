@@ -34,7 +34,11 @@
                 <ref bean="myRealm"></ref>
             </list>
         </property>
+        <!--记住我管理器-->
         <property name="rememberMeManager" ref="rememberMeManager"/>
+
+        <property name="cacheManager" ref="ehCacheManager"></property>
+
     </bean>
 
     <bean id="myRealm" class="com.baizhi.cmfz.utils.MyRealm">
@@ -51,6 +55,12 @@
         <property name="maxAge" value="108000" />
         <property name="path" value="/" />
     </bean>
+
+    <!--缓存管理器-->
+    <bean id="ehCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" ></property>
+    </bean>
+
 
     <!--复杂的凭证匹配器-->
     <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">

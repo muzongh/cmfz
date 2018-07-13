@@ -1,0 +1,14 @@
+<ehcache>
+    <diskStore path="java.io.tmpdir/shiro-ehcache"/>
+    <!-- maxEntriesLocalHeap最大缓存数 -->
+    <defaultCache
+            maxEntriesLocalHeap="2000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="false"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+    />
+
+</ehcache>

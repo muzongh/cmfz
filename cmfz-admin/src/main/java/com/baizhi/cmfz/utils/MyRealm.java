@@ -40,7 +40,6 @@ public class MyRealm extends AuthorizingRealm {
         }
         List<Permission> permissions = ms.queryPermissionsByName(username);
         for (Permission permission : permissions) {
-            System.out.println(permission);
             info.addStringPermission(permission.getPermissionTag());
         }
         return info;
@@ -54,7 +53,6 @@ public class MyRealm extends AuthorizingRealm {
      */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
-
         String username = usernamePasswordToken.getUsername();
 
         Manager manager = ms.login(username);
